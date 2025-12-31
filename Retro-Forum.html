@@ -136,15 +136,21 @@
           </p>
         </div>
         <div class="flex flex-col lg:flex-row gap-4 justify-center">
-          <div id="post-container">
-            
-          </div>
+          <div id="post-container"></div>
 
           <div class="w-full lg:w-[390px] bg-[#f3f3f4] p-4 rounded-lg">
             <div class="flex justify-between">
-              <div class="font-bold">Title</div>
+              <div class="font-bold text-xl">Title</div>
               <div>
                 <p><i class="fa-solid fa-check"></i>Mark as read (4)</p>
+              </div>
+            </div>
+            <div class="mt-4 flex justify-between items-center bg-white p-4 rounded-lg shadow-sm">
+              <div>
+                <h2 class="card-title font-bold">${post.title}</h2>
+              </div>
+              <div>
+                <p><i class="fa-regular fa-eye"></i>${560}</p>
               </div>
             </div>
           </div>
@@ -195,11 +201,10 @@
           </p>
         </div>
 
-        <div id="latest-post-container"
+        <div
+          id="latest-post-container"
           class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center"
-        >
-          
-        </div>
+        ></div>
       </section>
     </main>
 
