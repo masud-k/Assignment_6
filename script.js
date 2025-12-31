@@ -4,20 +4,20 @@ const latestPostContainer = document.getElementById("latest-post-container");
 
 
 const loadPosts = async () => {
-  try {
-    const response = await fetch("https://openapi.programming-hero.com/api/retro-forum/posts");
-    const data = await response.json();
-    displayPosts(data.posts);
-    console.log(data.posts);
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-  }
+    try {
+        const response = await fetch("https://openapi.programming-hero.com/api/retro-forum/posts");
+        const data = await response.json();
+        displayPosts(data.posts);
+        console.log(data.posts);
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
 };
 const displayPosts = (posts) => {
-  postContainer.innerHTML = "";
-  posts.forEach(post => {
-    const postElement = document.createElement("div");
-    postElement.innerHTML = `
+    postContainer.innerHTML = "";
+    posts.forEach(post => {
+        const postElement = document.createElement("div");
+        postElement.innerHTML = `
     <div class="w-full lg:w-[760px] flex bg-[#f2f2ff] p-4 rounded-lg mb-4">
               <div
                 class="w-16 h-16 bg-gray-300 rounded-lg mr-6 overflow-hidden"
@@ -59,29 +59,29 @@ const displayPosts = (posts) => {
               </div>
             </div>
     `;
-    postContainer.appendChild(postElement);
-  });
+        postContainer.appendChild(postElement);
+    });
 };
 loadPosts();
 
 // latest posts
 
 const loadLatestPosts = async () => {
-  try {
-    const response = await fetch("https://openapi.programming-hero.com/api/retro-forum/latest-posts");
-    const data = await response.json();
-    displayLatestPosts(data);
-    console.log(data);
-  }
-  catch (error) {
-    console.error("Error fetching latest posts:", error);
-  }
+    try {
+        const response = await fetch("https://openapi.programming-hero.com/api/retro-forum/latest-posts");
+        const data = await response.json();
+        displayLatestPosts(data);
+        console.log(data);
+    }
+    catch (error) {
+        console.error("Error fetching latest posts:", error);
+    }
 }
 const displayLatestPosts = (data) => {
-  data.forEach (post => {
-  const latestPostElement = document.createElement("div");
-  latestPostElement.innerHTML = `
-  <div class="card bg-base-100 w-96 shadow-sm">
+    data.forEach(post => {
+        const latestPostElement = document.createElement("div");
+        latestPostElement.innerHTML = `
+        <div class="card bg-base-100 w-96 shadow-sm">
             <figure>
               <img
                 src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
@@ -113,7 +113,7 @@ const displayLatestPosts = (data) => {
             </div>
           </div>
   `;
-  latestPostContainer.appendChild(latestPostElement);
-  });
+        latestPostContainer.appendChild(latestPostElement);
+    });
 };
-loadLatestPosts ();
+loadLatestPosts();
