@@ -8,7 +8,6 @@ const loadPosts = async () => {
         const response = await fetch("https://openapi.programming-hero.com/api/retro-forum/posts");
         const data = await response.json();
         displayPosts(data.posts);
-        console.log(data.posts);
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
@@ -16,38 +15,37 @@ const loadPosts = async () => {
 const displayPosts = (posts) => {
     postContainer.innerHTML = "";
     posts.forEach(post => {
+        console.log(post);
         const postElement = document.createElement("div");
         postElement.innerHTML = `
     <div class="w-full lg:w-[760px] flex bg-[#f2f2ff] p-4 rounded-lg mb-4">
               <div
                 class="w-16 h-16 bg-gray-300 rounded-lg mr-6 overflow-hidden"
               >
-                <img src="" alt="" />
+                <img src="${post.image}" alt="author image" />
               </div>
               <div>
                 <div class="flex gap-6">
-                  <p>#music</p>
-                  <p>Author : Awlad Hossain</p>
+                  <p># ${post.category}</p>
+                  <p>Author : ${post.author.name}</p>
                 </div>
                 <h1 class="text-xl font-bold">
-                  10 Kids Unaware of Their Halloween Costume
+                  ${post.title}
                 </h1>
                 <p class="mt-4">
-                  It’s one thing to subject yourself to ha Halloween costume
-                  mishap because,<br />
-                  hey that’s your prerogative
+                    ${post.description}
                 </p>
                 <hr class="my-5 border-dotted border-t" />
                 <div class="flex justify-between">
                   <div class="flex gap-5">
                     <div>
-                      <p><i class="fa-regular fa-message"></i> 560</p>
+                      <p><i class="fa-regular fa-message"></i> ${post.comment_count}</p>
                     </div>
                     <div>
-                      <p><i class="fa-regular fa-eye"></i>1,568</p>
+                      <p><i class="fa-regular fa-eye"></i>${post.view_count}</p>
                     </div>
                     <div>
-                      <p><i class="fa-regular fa-clock"></i>5 min</p>
+                      <p><i class="fa-regular fa-clock"></i>${post.posted_time} min</p>
                     </div>
                   </div>
                   <button>
@@ -71,7 +69,6 @@ const loadLatestPosts = async () => {
         const response = await fetch("https://openapi.programming-hero.com/api/retro-forum/latest-posts");
         const data = await response.json();
         displayLatestPosts(data);
-        console.log(data);
     }
     catch (error) {
         console.error("Error fetching latest posts:", error);
@@ -79,34 +76,34 @@ const loadLatestPosts = async () => {
 }
 const displayLatestPosts = (data) => {
     data.forEach(post => {
+        console.log(post);
         const latestPostElement = document.createElement("div");
         latestPostElement.innerHTML = `
         <div class="card bg-base-100 w-96 shadow-sm">
             <figure>
               <img
-                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                alt="Shoes"
+                src="${post.cover_image}"
+                alt="cover image"
               />
             </figure>
             <div class="card-body">
               <div>
                 <p class="text-sm text-gray-500">
-                  <i class="fa-regular fa-calendar"></i> Date and time
+                  <i class="fa-regular fa-calendar"></i> ${post.author.posted_date}
                 </p>
               </div>
               <h2 class="card-title font-bold">
-                What will a mars habitat force that impact in our daily life!!!
+                ${post.title}
               </h2>
               <p>
-                A card component has a figure, a body part, and inside body
-                there are title and actions parts
+                ${post.description}
               </p>
               <div class="card-actions mt-4 items-center gap-4">
                 <div class="w-14 h-14 bg-slate-600 rounded-full">
-                  <img src="" alt="user avatar" />
+                  <img src="${post.profile_image}" alt="user avatar" />
                 </div>
                 <div>
-                  <p class="font-semibold">Awlad Hossain</p>
+                  <p class="font-semibold">${post.author.name}</p>
                   <p>Author</p>
                 </div>
               </div>
