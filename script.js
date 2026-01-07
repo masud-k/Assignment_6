@@ -2,6 +2,7 @@ const postContainer = document.getElementById("post-container");
 const latestPostContainer = document.getElementById("latest-post-container");
 const readContainer = document.getElementById("read-container");
 const readCountElement = document.getElementById("unread-count");
+const loadingSpinner = document.getElementById("loading-spinner");
 let readcount = [];
 
 const loadPosts = async () => {
@@ -68,6 +69,7 @@ loadPosts();
 // latest posts
 
 const loadLatestPosts = async () => {
+  toggleSpinner(true);
   try {
     const response = await fetch(
       "https://openapi.programming-hero.com/api/retro-forum/latest-posts"
@@ -80,7 +82,7 @@ const loadLatestPosts = async () => {
 };
 const displayLatestPosts = (data) => {
   data.forEach((post) => {
-    console.log(post);
+    toggleSpinner(false);
     const latestPostElement = document.createElement("div");
     latestPostElement.innerHTML = `
         <div class="card bg-base-100 w-96 shadow-sm">
@@ -137,5 +139,12 @@ const markAsRead = (postId, postTitle, postViewCount) => {
             </div>
     `;
     readContainer.appendChild(readPostElement);
+  }
+};
+function toggleSpinner(isLoading) {
+  if (isLoading) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
   }
 };
