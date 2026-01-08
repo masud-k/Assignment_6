@@ -9,6 +9,7 @@ let allPosts = [];
 // Load all posts
 
 const loadPosts = async () => {
+  toggleSpinner(true);
   try {
     const response = await fetch(
       "https://openapi.programming-hero.com/api/retro-forum/posts"
@@ -19,6 +20,7 @@ const loadPosts = async () => {
   } catch (error) {
     console.error("Error fetching posts:", error);
   }
+  toggleSpinner(false);
 };
 const displayPosts = (posts) => {
   postContainer.innerHTML = "";
