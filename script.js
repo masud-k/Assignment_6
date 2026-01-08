@@ -4,6 +4,9 @@ const readContainer = document.getElementById("read-container");
 const readCountElement = document.getElementById("unread-count");
 const loadingSpinner = document.getElementById("loading-spinner");
 let readcount = [];
+let allPosts = [];
+
+// Load all posts
 
 const loadPosts = async () => {
   try {
@@ -11,6 +14,7 @@ const loadPosts = async () => {
       "https://openapi.programming-hero.com/api/retro-forum/posts"
     );
     const data = await response.json();
+    allPosts = data.posts;
     displayPosts(data.posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -23,11 +27,21 @@ const displayPosts = (posts) => {
     const postElement = document.createElement("div");
     postElement.innerHTML = `
     <div class="w-full lg:w-[760px] flex bg-[#f2f2ff] p-4 rounded-lg mb-4">
-              <div
-                class="w-16 h-16 bg-gray-300 rounded-lg mr-6 overflow-hidden"
-              >
-                <img src="${post.image}" alt="author image" />
+              <div class="relative w-16 h-16 mr-6">
+                <img
+                  src="${post.image}"
+                  alt="author image"
+                  class="w-16 h-16 rounded-lg object-cover"
+                />
+
+                <span
+                  class="absolute -top-1 -right-1 w-3 h-3 rounded-full ${
+                    post.isActive ? "bg-green-500" : "bg-red-500"
+                  } border-2 border-white"
+                  title="${post.isActive ? "Active" : "Inactive"}"
+                ></span>
               </div>
+
               <div>
                 <div class="flex gap-6">
                   <p># ${post.category}</p>
@@ -43,16 +57,22 @@ const displayPosts = (posts) => {
                 <div class="flex justify-between">
                   <div class="flex gap-5">
                     <div>
-                      <p><i class="fa-regular fa-message"></i> ${post.comment_count}</p>
+                      <p><i class="fa-regular fa-message"></i> ${
+                        post.comment_count
+                      }</p>
                     </div>
                     <div>
                       <p><i class="fa-regular fa-eye"></i>${post.view_count}</p>
                     </div>
                     <div>
-                      <p><i class="fa-regular fa-clock"></i>${post.posted_time} min</p>
+                      <p><i class="fa-regular fa-clock"></i>${
+                        post.posted_time
+                      } min</p>
                     </div>
                   </div>
-                  <button onclick="markAsRead('${post.id}', '${post.title}', '${post.view_count}')" class="btn btn-sm">
+                  <button onclick="markAsRead('${post.id}', '${post.title}', '${
+      post.view_count
+    }')" class="btn btn-sm">
                     <i
                       class="bg-[#10B981] rounded-full p-2 fa-regular fa-envelope-open"
                     ></i>
@@ -95,7 +115,7 @@ const displayLatestPosts = (data) => {
             <div class="card-body">
               <div>
                 <p class="text-sm text-gray-500">
-                  <i class="fa-regular fa-calendar"></i> ${post.author.posted_date}
+                  <i class="fa-regular fa-calendar"></i> ${post.author.posted_date ? post.author.posted_date : 'No puslished date found'}
                 </p>
               </div>
               <h2 class="card-title font-bold">
@@ -110,7 +130,7 @@ const displayLatestPosts = (data) => {
                 </div>
                 <div>
                   <p class="font-semibold">${post.author.name}</p>
-                  <p>Author</p>
+                  <p>${post.author.designation ? post.author.designation : 'Unknown'}</p>
                 </div>
               </div>
             </div>
@@ -147,4 +167,15 @@ function toggleSpinner(isLoading) {
   } else {
     loadingSpinner.classList.add("hidden");
   }
+}
+// Search by category functionality
+const searchByCategory = () => {
+  const categoryInput = document
+    .getElementById("site-search")
+    .value.trim()
+    .toLowerCase();
+  const filteredPosts = allPosts.filter((post) =>
+    post.category.toLowerCase().includes(categoryInput)
+  );
+  displayPosts(filteredPosts);
 };
